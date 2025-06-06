@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DreamNest Real Estate</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f2f5;
+    }
+
+    header {
+      background: #003366;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header img {
+      height: 40px;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    #hero {
+      background: url('https://images.unsplash.com/photo-1560185127-6ed189bf02f4') no-repeat center center/cover;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    #form-container, #chat-container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"], input[type="email"], select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background: #0078d4;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #005a9e;
+    }
+
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      max-width: 80%;
+    }
+
+    .user {
+      background: #e6f0ff;
+      text-align: right;
+      margin-left: auto;
+    }
+
+    .bot {
+      background: #e8f5e9;
+      text-align: left;
+      margin-right: auto;
+    }
+
+    #chat {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .card h3 {
+      margin: 10px 0 5px;
+    }
+
+    .card p {
+      margin: 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Logo" />
+    DreamNest Real Estate
+  </header>
+
+  <div id="hero">
+    Find Your Dream Home Today
+  </div>
+
+  <div id="form-container">
+    <h2>Let's Get Started</h2>
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+
+    <label for="interest">What are you interested in?</label>
+    <select id="interest" required>
+      <option value="">-- Please choose an option --</option>
+      <option value="buy">Buying a Property</option>
+      <option value="rent">Renting a Property</option>
+      <option value="sell">Selling a Property</option>
+      <option value="other">Other</option>
+    </select>
+
+    <button onclick="submitForm()">Start Chat</button>
+  </div>
+
+  <div id="chat-container" style="display:none;">
+    <h2>Virtual Assistant</h2>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Property" />
+      <h3>Modern Family Home</h3>
+      <p>4 Bed • 3 Bath • 2,500 sqft • $750,000</p>
+    </div>
+    <div id="chat">
+      <div class="message bot">Hi there! I'm your real estate assistant. What kind of property are you looking for?</div>
+    </div>
+    <input type="text" id="input" placeholder="Type your message..." />
+  </div>
+
+  <script>
+    function submitForm() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const interest = document.getElementById('interest').value;
+
+      if (name && email && interest) {
+        document.getElementById('form-container').style.display = 'none';
+        document.getElementById('chat-container').style.display = 'block';
+
+        const chat = document.getElementById('chat');
+        chat.innerHTML += `<div class="message bot">Hi ${name}! Thanks for your interest in ${interest}. How can I assist you today?</div>`;
+      } else {
+        alert('Please fill in all fields.');
+      }
+    }
+
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+
+    input.addEventListener('keydown', async (e) => {
+      if (e.key === 'Enter') {
+        const userMsg = input.value.trim();
+        if (!userMsg) return;
+        input.value = '';
+        chat.innerHTML += `<div class="message user">${userMsg}</div>`;
+
+        // Simulated bot response
+        const botMsg = "Thanks for your message! We'll find the best options for you.";
+        chat.innerHTML += `<div class="message bot">${botMsg}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+      }
+    });
+  </script>
+
+</body>
+</html>
